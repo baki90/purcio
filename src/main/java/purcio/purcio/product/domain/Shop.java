@@ -1,4 +1,4 @@
-package purcio.purcio.shop.domain;
+package purcio.purcio.product.domain;
 
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -20,6 +20,7 @@ public class Shop {
     @Column(name="shop_id")
     private Long id;
 
+    @Column(name="name" , unique=true)
     private String name; // 쇼핑몰 이름
     private String picture; // 쇼핑몰 대표 이미지
     private String shopNumber; // 전화번호
@@ -35,4 +36,13 @@ public class Shop {
         this.shopNumber = shopNumber;
         this.user = user;
     }
+
+
+    public void updateShop(String name, String picture, String shopNumber, User user) {
+        if(this.name != null) this.name = name;
+        if(this.picture != null) this.picture = picture;
+        if(this.shopNumber != null) this.shopNumber = shopNumber;
+        if(this.user != null) this.user = user;
+    }
+
 }

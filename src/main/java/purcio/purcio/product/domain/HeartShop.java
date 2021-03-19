@@ -1,4 +1,4 @@
-package purcio.purcio.shop.domain;
+package purcio.purcio.product.domain;
 
 
 import lombok.AccessLevel;

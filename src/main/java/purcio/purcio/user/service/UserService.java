@@ -76,5 +76,17 @@ public class UserService {
                 .build();
     }
 
+    @Transactional
+    public ResponseDTO<Object> deleteUser(Long id){
+        User user = userRepository.findById(id).orElseThrow(NoSuchElementException::new);
+
+        userRepository.delete(user);
+
+        return ResponseDTO.builder()
+                .message("유저 삭제가 완료되었습니다.")
+                .content(user.getId())
+                .build();
+    }
+
 
 }
