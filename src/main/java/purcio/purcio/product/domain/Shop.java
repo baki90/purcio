@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import purcio.purcio.common.model.BaseEntity;
 import purcio.purcio.user.domain.User;
 
 import javax.persistence.*;
@@ -14,11 +15,7 @@ import javax.persistence.*;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Shop {
-    @Id
-    @GeneratedValue
-    @Column(name="shop_id")
-    private Long id;
+public class Shop extends BaseEntity {
 
     @Column(name="name" , unique=true)
     private String name; // 쇼핑몰 이름

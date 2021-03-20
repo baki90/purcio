@@ -1,17 +1,14 @@
 package purcio.purcio.order.domain;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import purcio.purcio.product.domain.Product;
+import purcio.purcio.common.model.BaseEntity;
 import purcio.purcio.user.domain.Address;
 import purcio.purcio.user.domain.User;
 
 import javax.persistence.*;
-import javax.validation.Valid;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,54 +16,59 @@ import java.util.List;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "orders")
-public class Order {
-
-    @Id
-    @GeneratedValue
-    @Column(name="product_order_id")
-    private Long id;
+public class Order extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user; // 구매자
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "product_id")
-    private List<Product> products = new ArrayList<>(); // 구매한 상품
-
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Seoul")
-    private LocalDateTime purchaseTime; // 구매한 시간
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    private List<OrderProduct> orderProducts = new ArrayList<>(); // 구매한 상품
 
     @Enumerated(EnumType.STRING)
-    private OrderType orderType;
+    private OrderStatus orderStatus;
 
-    private Address address; // 배송지
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "delivery_id")
+    private Delivery delivery; // 배송지
 
-    public void addProduct(Product product){
-        products.add(product);
-       // product.setOrder(this);
-    }
-    @Builder
-    public Order(User user, List<Product> products, LocalDateTime purchaseTime, OrderType orderType, Address address) {
+    public void setUser(User user) {
         this.user = user;
-        this.products = products;
-        this.purchaseTime = purchaseTime;
-        this.orderType = orderType;
-        this.address = address;
     }
 
-    public static Order createOrder(User user, Address address, Product... products){
-        Order order = new Order();
-        order.user = user;
-        order.address = address;
+    public void setOrderStatus(OrderStatus orderStatus) {
+        this.orderStatus = orderStatus;
+    }
 
-        for(Product product : products){
-            order.addProduct(product);
+    public void setDelivery(Delivery delivery) {
+        this.delivery = delivery;
+        delivery.setOrder(this);
+    }
+
+    public void addProduct(OrderProduct orderProduct){
+        orderProducts.add(orderProduct);
+        orderProduct.setOrder(this);
+    }
+
+    @Builder
+    public Order(User user, List<OrderProduct> orderProducts, OrderStatus orderStatus, Delivery delivery) {
+        this.user = user;
+        this.orderProducts = orderProducts;
+        this.orderStatus = orderStatus;
+        this.delivery = delivery;
+    }
+
+    public static Order createOrder(User user, Delivery delivery, OrderProduct... orderProducts){
+        Order order = new Order();
+        order.setUser(user);
+        order.setDelivery(delivery);
+
+        for(OrderProduct orderProduct : orderProducts){
+            order.addProduct(orderProduct);
         }
 
-        order.orderType = OrderType.ORDER;
-        order.purchaseTime = LocalDateTime.now();
-
+        order.setOrderStatus(OrderStatus.ORDER);
+        order.create();
         return order;
     }
 

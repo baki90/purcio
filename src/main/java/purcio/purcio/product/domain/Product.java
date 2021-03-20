@@ -5,17 +5,14 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import purcio.purcio.common.exception.NotEnoughStockException;
+import purcio.purcio.common.model.BaseEntity;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Product {
-    @Id
-    @GeneratedValue
-    @Column(name="product_id")
-    private Long id;
+public class Product extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "shop_id")
@@ -25,6 +22,8 @@ public class Product {
     private Category category; // 판매 카테고리
     private Long price; // 판매되는 가격
     private int stockQuantity; // 재고
+
+
 
     /** 비즈니스 메소드 */
     // 재고 수량 증가
