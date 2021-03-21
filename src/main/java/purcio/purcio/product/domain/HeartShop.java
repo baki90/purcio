@@ -5,6 +5,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import purcio.purcio.common.model.BaseEntity;
 import purcio.purcio.user.domain.User;
 
 import javax.persistence.*;
@@ -15,12 +16,7 @@ import javax.persistence.*;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class HeartShop {
-
-    @Id
-    @GeneratedValue
-    @Column(name="heart_shop_id")
-    private Long id;
+public class HeartShop extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")

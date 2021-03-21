@@ -4,11 +4,13 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import purcio.purcio.common.model.BaseEntity;
+import purcio.purcio.order.domain.Order;
+import purcio.purcio.order.domain.OrderProduct;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -17,12 +19,7 @@ import javax.persistence.Id;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class User {
-
-    @Id
-    @GeneratedValue
-    @Column(name="user_id")
-    private Long id;
+public class User extends BaseEntity {
 
     private String name;
 
@@ -31,12 +28,20 @@ public class User {
 
     private String picture;
 
+    @Column(name="nick_name" , unique=true)
     private String nickName; // 닉네임
     private String phoneNumber; // 휴대폰 번호
     private Integer age; // 나이
     private String sex; // 성별
 
+    @Embedded
     private Address address; // 거주지
+
+    @OneToMany(mappedBy = "user")
+    private List<Order> orders = new ArrayList<>();
+
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    private List<OrderProduct> orderProducts = new ArrayList<>(); // 구매한 상품
 
     @Builder
     public User(String name, String email, String picture, String nickName, String phoneNumber, Integer age, String sex, Address address) {

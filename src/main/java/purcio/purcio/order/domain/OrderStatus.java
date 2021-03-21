@@ -1,5 +1,5 @@
 package purcio.purcio.order.domain;
 
-public enum OrderType {
+public enum OrderStatus {
     ORDER, CANCEL, COMP
 }
