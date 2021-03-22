@@ -29,7 +29,7 @@ public class ExceptionController {
     public ResponseEntity<ErrorResponse> noSuchElementException(NoSuchElementException e, HttpServletRequest request){
         log.warn("[NoSuchElementException 발생] url:{}, trace:{}",request.getRequestURI(), e.getStackTrace());
 
-        ErrorResponse errorResponse = new ErrorResponse(ErrorCode.NO_ARG.getCode(), ErrorCode.NO_ARG.getDescription());
+        ErrorResponse errorResponse = new ErrorResponse(ErrorCode.NOT_FOUND_ELEMENT.getCode(), ErrorCode.NOT_FOUND_ELEMENT.getDescription());
 
         return new ResponseEntity<ErrorResponse>(errorResponse, HttpStatus.BAD_REQUEST);
     }
@@ -39,8 +39,8 @@ public class ExceptionController {
     public ResponseEntity<ErrorResponse> illegalArgumentException(IllegalArgumentException e, HttpServletRequest request){
         log.warn("[NoSuchElementException 발생] url:{}, trace:{}",request.getRequestURI(), e.getStackTrace());
 
-        ErrorResponse errorResponse = new ErrorResponse(ErrorCode.Illegal_ARG.getCode(),
-                ErrorCode.Illegal_ARG.getDescription(), e.getMessage());
+        ErrorResponse errorResponse = new ErrorResponse(ErrorCode.ILLEGAL_ARG.getCode(),
+                ErrorCode.ILLEGAL_ARG.getDescription(), e.getMessage());
 
         return new ResponseEntity<ErrorResponse>(errorResponse, HttpStatus.BAD_REQUEST);
     }
