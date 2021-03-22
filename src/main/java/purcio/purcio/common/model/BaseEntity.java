@@ -58,6 +58,6 @@ public class BaseEntity implements Serializable {
 
     public void update(){
         setUpdatedAt(LocalDateTime.now());
-       // setCreatedBy(id);
+       // setUpdatedBy(id);
     }
 }
