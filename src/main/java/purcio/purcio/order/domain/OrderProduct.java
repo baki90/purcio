@@ -43,7 +43,11 @@ public class OrderProduct extends BaseEntity {
         this.count += count;
     }
     public void removeCount(int count) {
-        this.count -= count;
+        int restCount = this.count - count;
+        if(restCount <= 0){
+            throw new IllegalArgumentException("수량은 0보다 적을 수 없습니다.");
+        }
+        this.count = restCount;
     }
 
     @Builder
@@ -52,5 +56,14 @@ public class OrderProduct extends BaseEntity {
         this.order = order;
         this.orderPrice = orderPrice;
         this.count = count;
+    }
+
+    // 상품 재고 원복
+    public void cancel(){
+        getProduct().addStock(count);
+    }
+
+    public int getTotalPrice() {
+        return getOrderPrice() * getCount();
     }
 }

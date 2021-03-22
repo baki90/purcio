@@ -6,7 +6,8 @@ import lombok.Getter;
 public enum ErrorCode {
 
     NOT_BLANK("ERROR_CODE_0001","필수값이 누락되었습니다"),
-    NO_ARG("ERROR_CODE_0002", "유효하지 않은 값입니다.")
+    NOT_FOUND_ELEMENT("ERROR_CODE_0002", "해당하는 모델을 찾을 수 없습니다."),
+    ILLEGAL_ARG("ERROR_CODE_0003", "유효하지 않은 값입니다.")
     ;
 
     private String code;
