@@ -20,7 +20,7 @@ public class Delivery extends BaseEntity {
     @Embedded
     private Address address;
 
-    private DeliveryStatus deliveryType;
+    private DeliveryStatus deliveryStatus;
 
     public void setOrder(Order order) {
         this.order = order;
@@ -30,7 +30,7 @@ public class Delivery extends BaseEntity {
         this.address = address;
     }
 
-    public void setDeliveryType(DeliveryStatus deliveryType) {
-        this.deliveryType = deliveryType;
+    public void setDeliveryStatus(DeliveryStatus deliveryStatus) {
+        this.deliveryStatus = deliveryStatus;
     }
 }

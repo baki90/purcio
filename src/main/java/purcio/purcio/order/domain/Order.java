@@ -72,4 +72,19 @@ public class Order extends BaseEntity {
         return order;
     }
 
+
+    public void cancelOrder(){
+        if(delivery.getDeliveryStatus() == DeliveryStatus.COMP){
+            throw new IllegalArgumentException("이미 배송 완료된 상품은 취소가 불가합니다.");
+        }
+        this.setOrderStatus(OrderStatus.CANCEL);
+
+        orderProducts.stream().forEach(o-> {
+            o.cancel();
+        });
+    }
+
+    public int getTotalPrice() {
+        return orderProducts.stream().mapToInt(OrderProduct::getTotalPrice).sum();
+    }
 }
