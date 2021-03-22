@@ -34,6 +34,7 @@ public class Order extends BaseEntity {
 
     public void setUser(User user) {
         this.user = user;
+        user.getOrders().add(this);
     }
 
     public void setOrderStatus(OrderStatus orderStatus) {
@@ -50,14 +51,6 @@ public class Order extends BaseEntity {
         orderProduct.setOrder(this);
     }
 
-    @Builder
-    public Order(User user, List<OrderProduct> orderProducts, OrderStatus orderStatus, Delivery delivery) {
-        this.user = user;
-        this.orderProducts = orderProducts;
-        this.orderStatus = orderStatus;
-        this.delivery = delivery;
-    }
-
     public static Order createOrder(User user, Delivery delivery, OrderProduct... orderProducts){
         Order order = new Order();
         order.setUser(user);
@@ -68,7 +61,6 @@ public class Order extends BaseEntity {
         }
 
         order.setOrderStatus(OrderStatus.ORDER);
-        order.create();
         return order;
     }
 

@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.aspectj.weaver.ast.Or;
 import purcio.purcio.common.model.BaseEntity;
 import purcio.purcio.product.domain.Product;
 
@@ -39,24 +40,19 @@ public class OrderProduct extends BaseEntity {
         this.orderPrice = orderPrice;
     }
 
-    public void addCount(int count) {
-        this.count += count;
-    }
-    public void removeCount(int count) {
-        int restCount = this.count - count;
-        if(restCount <= 0){
-            throw new IllegalArgumentException("수량은 0보다 적을 수 없습니다.");
-        }
-        this.count = restCount;
-    }
-
-    @Builder
-    public OrderProduct(Product product, Order order, int orderPrice, int count) {
-        this.product = product;
-        this.order = order;
-        this.orderPrice = orderPrice;
+   public void setCount(int count){
         this.count = count;
-    }
+   }
+
+    public static OrderProduct createOrderProduct(Product product, int orderPrice, int count){
+        OrderProduct orderProduct = new OrderProduct();
+        orderProduct.setProduct(product);
+        orderProduct.setOrderPrice(orderPrice);
+        orderProduct.setCount(count);
+
+        product.removeStock(count); // 재고 감소
+        return orderProduct;
+   }
 
     // 상품 재고 원복
     public void cancel(){
@@ -66,4 +62,6 @@ public class OrderProduct extends BaseEntity {
     public int getTotalPrice() {
         return getOrderPrice() * getCount();
     }
+
+
 }

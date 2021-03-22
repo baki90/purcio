@@ -20,7 +20,7 @@ public class Product extends BaseEntity {
 
     private String name; // 판매 상품 이름
     private Category category; // 판매 카테고리
-    private Long price; // 판매되는 가격
+    private int price; // 판매되는 가격
     private int stockQuantity; // 재고
 
 
@@ -41,7 +41,7 @@ public class Product extends BaseEntity {
     }
 
     @Builder
-    public Product(Shop shop, String name, Category category, Long price, int stockQuantity) {
+    public Product(Shop shop, String name, Category category, int price, int stockQuantity) {
         this.shop = shop;
         this.name = name;
         this.category = category;

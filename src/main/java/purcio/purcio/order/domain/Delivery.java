@@ -33,4 +33,11 @@ public class Delivery extends BaseEntity {
     public void setDeliveryStatus(DeliveryStatus deliveryStatus) {
         this.deliveryStatus = deliveryStatus;
     }
+
+    public static Delivery createDelivery(Address address) {
+        Delivery delivery = new Delivery();
+        delivery.setAddress(address);
+        delivery.setDeliveryStatus(DeliveryStatus.READY);
+        return delivery;
+    }
 }
