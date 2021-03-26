@@ -51,8 +51,9 @@ public class BaseEntity implements Serializable {
         return this.id == null;
     }
 
-    public void create(){
+    public BaseEntity(){
         setCreatedAt(LocalDateTime.now());
+        // TODO: 아이디 포함 생성자 따로 만들기
         //setCreatedBy(id);
     }
 

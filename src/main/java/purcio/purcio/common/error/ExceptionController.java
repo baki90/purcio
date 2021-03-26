@@ -29,7 +29,8 @@ public class ExceptionController {
     public ResponseEntity<ErrorResponse> noSuchElementException(NoSuchElementException e, HttpServletRequest request){
         log.warn("[NoSuchElementException 발생] url:{}, trace:{}",request.getRequestURI(), e.getStackTrace());
 
-        ErrorResponse errorResponse = new ErrorResponse(ErrorCode.NOT_FOUND_ELEMENT.getCode(), ErrorCode.NOT_FOUND_ELEMENT.getDescription());
+        ErrorResponse errorResponse = new ErrorResponse(ErrorCode.NOT_FOUND_ELEMENT.getCode(), ErrorCode.NOT_FOUND_ELEMENT.getDescription(),
+                e.getMessage());
 
         return new ResponseEntity<ErrorResponse>(errorResponse, HttpStatus.BAD_REQUEST);
     }

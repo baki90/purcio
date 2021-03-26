@@ -34,6 +34,7 @@ public class Order extends BaseEntity {
 
     public void setUser(User user) {
         this.user = user;
+        user.getOrders().add(this);
     }
 
     public void setOrderStatus(OrderStatus orderStatus) {
@@ -50,15 +51,7 @@ public class Order extends BaseEntity {
         orderProduct.setOrder(this);
     }
 
-    @Builder
-    public Order(User user, List<OrderProduct> orderProducts, OrderStatus orderStatus, Delivery delivery) {
-        this.user = user;
-        this.orderProducts = orderProducts;
-        this.orderStatus = orderStatus;
-        this.delivery = delivery;
-    }
-
-    public static Order createOrder(User user, Delivery delivery, OrderProduct... orderProducts){
+    public static Order createOrder(User user, Delivery delivery, List<OrderProduct> orderProducts){
         Order order = new Order();
         order.setUser(user);
         order.setDelivery(delivery);
@@ -68,7 +61,6 @@ public class Order extends BaseEntity {
         }
 
         order.setOrderStatus(OrderStatus.ORDER);
-        order.create();
         return order;
     }
 
@@ -78,6 +70,7 @@ public class Order extends BaseEntity {
             throw new IllegalArgumentException("이미 배송 완료된 상품은 취소가 불가합니다.");
         }
         this.setOrderStatus(OrderStatus.CANCEL);
+        update();
 
         orderProducts.stream().forEach(o-> {
             o.cancel();

@@ -40,9 +40,6 @@ public class User extends BaseEntity {
     @OneToMany(mappedBy = "user")
     private List<Order> orders = new ArrayList<>();
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
-    private List<OrderProduct> orderProducts = new ArrayList<>(); // 구매한 상품
-
     @Builder
     public User(String name, String email, String picture, String nickName, String phoneNumber, Integer age, String sex, Address address) {
         this.name = name;
