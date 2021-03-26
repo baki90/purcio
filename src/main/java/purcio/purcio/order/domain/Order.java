@@ -70,6 +70,7 @@ public class Order extends BaseEntity {
             throw new IllegalArgumentException("이미 배송 완료된 상품은 취소가 불가합니다.");
         }
         this.setOrderStatus(OrderStatus.CANCEL);
+        update();
 
         orderProducts.stream().forEach(o-> {
             o.cancel();

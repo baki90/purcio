@@ -57,6 +57,7 @@ public class OrderProduct extends BaseEntity {
     // 상품 재고 원복
     public void cancel(){
         getProduct().addStock(count);
+        update();
     }
 
     public int getTotalPrice() {
