@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import purcio.purcio.common.model.BaseEntity;
+import purcio.purcio.order.domain.Cart;
 import purcio.purcio.order.domain.Order;
 import purcio.purcio.order.domain.OrderProduct;
 
@@ -40,6 +41,25 @@ public class User extends BaseEntity {
     @OneToMany(mappedBy = "user")
     private List<Order> orders = new ArrayList<>();
 
+    @OneToOne(mappedBy = "user")
+    private Cart cart;
+
+    public void setCart(Cart cart) {
+        this.cart = cart;
+    }
+
+    /**
+     * 유저가 장바구니를 조회한다.
+     * 만일 장바구니가 없으면, 생성한다.
+     * @return Cart(장바구니)
+     */
+    public Cart getCart() {
+        if(this.cart == null) {
+           this.cart = Cart.createCart(this);
+        }
+        return this.cart;
+    }
+
     @Builder
     public User(String name, String email, String picture, String nickName, String phoneNumber, Integer age, String sex, Address address) {
         this.name = name;
@@ -61,6 +81,8 @@ public class User extends BaseEntity {
         if(this.age != null) this.age = age;
         if(this.sex != null) this.sex = sex;
         if(this.address != null) this.address = address;
+
+        update();
     }
 
 
