@@ -3,7 +3,7 @@ package purcio.purcio.order.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import purcio.purcio.common.ResponseDTO;
-import purcio.purcio.order.dto.OrderCreateReqDTO;
+import purcio.purcio.order.dto.order.OrderCreateReqDTO;
 import purcio.purcio.order.service.OrderService;
 
 import javax.validation.Valid;
