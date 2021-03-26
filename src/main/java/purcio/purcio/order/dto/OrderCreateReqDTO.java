@@ -4,11 +4,10 @@ import lombok.Data;
 import purcio.purcio.user.domain.Address;
 
 import javax.validation.constraints.NotBlank;
+import java.util.Map;
 
 @Data
 public class OrderCreateReqDTO {
     public Address address;
-
-    @NotBlank(message = "수량을 입력해 주세요.")
-    public int count;
+    public Map<Long, Integer> orderProductDTOs;
 }

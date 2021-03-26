@@ -16,7 +16,11 @@ import purcio.purcio.user.domain.Address;
 import purcio.purcio.user.domain.User;
 import purcio.purcio.user.repository.UserRepository;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -27,32 +31,55 @@ public class OrderService {
     private final UserRepository userRepository;
     private final ProductRepository productRepository;
 
-    /** 상품 1개 주문 */
+    /**
+     * N개의 상품을 주문합니다.
+     * @param userId
+     * @param reqDto 배송 정보 & 상품 주문 정보 포함
+     * @return 주문 아이디
+     */
     @Transactional
-    public Long createOrder(Long userId, Long productId, OrderCreateReqDTO reqDto) {
+    public ResponseDTO<Object> createOrder(Long userId, OrderCreateReqDTO reqDto) {
 
-        // 유저와 상품 정보 조회
+        // 1. 유저 조회
         User user = userRepository.findById(userId).orElseThrow(
                 () -> new NoSuchElementException("해당하는 사용자를 찾을 수 없습니다."));
-        Product product = productRepository.findById(productId).orElseThrow(
-                () -> new NoSuchElementException("해당하는 상품을 찾을 수 없습니다."));
 
-        // 배송지 생성
-        Delivery delivery = Delivery.createDelivery(reqDto.address);
+        // 2. 맵을 바탕으로 상품 조회
+        // TODO: 상품 조회 후 예외 처리 필요
+        Map<Long, Integer> orderProductMap = reqDto.getOrderProductDTOs();
+        List<Product> products = productRepository.findAllById(
+                orderProductMap.keySet());
 
-        // 주문 생성
-        OrderProduct orderProduct = OrderProduct.createOrderProduct(product,product.getPrice(),reqDto.count);
-        Order order = Order.createOrder(user, delivery, orderProduct);
+        // 3. 배송지 생성
+        Delivery delivery = Delivery.createDelivery(reqDto.getAddress());
+        List<OrderProduct> orderProducts = new ArrayList<>();
 
-        // 저장
+        // 4. 각 상품별로 주문 리스트를 생성하기
+        products.stream().forEach(p->{
+            orderProducts.add(OrderProduct.createOrderProduct(p, p.getPrice()
+                    ,orderProductMap.get(p.getId())));
+        });
+
+        // 5. 주문 생성
+        Order order = Order.createOrder(user, delivery, orderProducts);
+
+        // 6. 저장
         orderRepository.save(order);
 
-        return order.getId();
+        return ResponseDTO.builder()
+                .message("주문이 완료되었습니다.")
+                .content(order.getId())
+                .build();
+
     }
 
-    /** 주문 내역 취소 */
+    /**
+     * 주문 내역을 취소합니다.
+     * @param orderId
+     * @return 주문 아이디
+     */
     @Transactional
-    public Long cancelOrder(Long orderId){
+    public ResponseDTO<Object> cancelOrder(Long orderId){
 
         // 주문 내역 조회
         Order order = orderRepository.findById(orderId).orElseThrow(
@@ -62,7 +89,10 @@ public class OrderService {
         // 주문 취소
         order.cancelOrder();
 
-        return orderId;
+        return ResponseDTO.builder()
+                .message("주문이 취소되었습니다.")
+                .content(order.getId())
+                .build();
     }
 
 }

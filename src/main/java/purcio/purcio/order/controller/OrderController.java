@@ -2,6 +2,7 @@ package purcio.purcio.order.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import purcio.purcio.common.ResponseDTO;
 import purcio.purcio.order.dto.OrderCreateReqDTO;
 import purcio.purcio.order.service.OrderService;
 
@@ -15,12 +16,12 @@ public class OrderController {
     private final OrderService orderService;
 
     @PostMapping()
-    public Long createOrder(Long userId, Long productId, @RequestBody @Valid OrderCreateReqDTO orderCreateReqDTO){
-        return orderService.createOrder(userId,productId,orderCreateReqDTO);
+    public ResponseDTO<Object> createOrder(Long userId, @RequestBody @Valid OrderCreateReqDTO orderCreateReqDTO){
+        return orderService.createOrder(userId,orderCreateReqDTO);
     }
 
     @PutMapping("/{id}")
-    public Long cancelOrder(@PathVariable("id") Long userId){
+    public ResponseDTO<Object> cancelOrder(@PathVariable("id") Long userId){
         return orderService.cancelOrder(userId);
     }
 }

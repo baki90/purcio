@@ -51,7 +51,7 @@ public class Order extends BaseEntity {
         orderProduct.setOrder(this);
     }
 
-    public static Order createOrder(User user, Delivery delivery, OrderProduct... orderProducts){
+    public static Order createOrder(User user, Delivery delivery, List<OrderProduct> orderProducts){
         Order order = new Order();
         order.setUser(user);
         order.setDelivery(delivery);
