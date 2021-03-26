@@ -20,7 +20,7 @@ public class OrderController {
         return orderService.createOrder(userId,orderCreateReqDTO);
     }
 
-    @PutMapping("/{id}")
+    @DeleteMapping("/{id}")
     public ResponseDTO<Object> cancelOrder(@PathVariable("id") Long userId){
         return orderService.cancelOrder(userId);
     }
