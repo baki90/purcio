@@ -26,20 +26,36 @@ public class Shop extends BaseEntity {
     @JoinColumn(name = "user_id")
     private User user; // shop 대표 관리자
 
-    @Builder
-    public Shop(String name, String picture, String shopNumber, User user) {
-        this.name = name;
-        this.picture = picture;
-        this.shopNumber = shopNumber;
-        this.user = user;
+    /**
+     * 뜨개샵을 생성합니다.
+     * @param name 뜨개샵 이름
+     * @param picture 뜨개샵 이미지
+     * @param shopNumber 뜨개샵 번호
+     * @param user 뜨개샵 관리자
+     * @return 생성된 뜨개샵 객체
+     */
+    public static Shop createShop(String name, String picture, String shopNumber, User user) {
+        Shop shop = new Shop();
+        if(name != null) shop.name = name;
+        if(picture != null) shop.picture = picture;
+        if(shopNumber != null) shop.shopNumber = shopNumber;
+        if(user != null) shop.user = user;
+        return shop;
     }
 
-
+    /**
+     * 뜨개샵 정보를 수정합니다.
+     * @param name 뜨개샵 이름
+     * @param picture 뜨개샵 이미지
+     * @param shopNumber 뜨개샵 번호
+     * @param user 뜨개샵 관리자
+     */
     public void updateShop(String name, String picture, String shopNumber, User user) {
-        if(this.name != null) this.name = name;
-        if(this.picture != null) this.picture = picture;
-        if(this.shopNumber != null) this.shopNumber = shopNumber;
-        if(this.user != null) this.user = user;
+        super.update();
+        if(name != null) this.name = name;
+        if(picture != null) this.picture = picture;
+        if(shopNumber != null) this.shopNumber = shopNumber;
+        if(user != null) this.user = user;
     }
 
 }

@@ -46,12 +46,7 @@ public class ShopService {
         User user = userRepository.findById(shopCreateReqDTO.getUserId())
         .orElseThrow(NoSuchElementException::new);
         
-        Shop shop = Shop.builder()
-        .name(shopCreateReqDTO.getName())
-        .shopNumber(shopCreateReqDTO.getShopNumber())
-        .picture(shopCreateReqDTO.getPicture())
-        .user(user)
-        .build();
+        Shop shop = Shop.createShop(shopCreateReqDTO.getName(), shopCreateReqDTO.getPicture(), shopCreateReqDTO.getShopNumber(), user);
         
         shopRepository.save(shop);
         
