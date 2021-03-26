@@ -23,14 +23,12 @@ public class CartProduct extends BaseEntity {
     private Cart cart;
 
     private int count;
-    private CartStatus cartStatus;
 
 
     public static CartProduct createCartProduct(Product product, int count){
         CartProduct cartProduct = new CartProduct();
         cartProduct.setProduct(product);
         cartProduct.setCount(count);
-        cartProduct.setCartStatus(CartStatus.READY);
 
         return cartProduct;
     }
@@ -45,10 +43,6 @@ public class CartProduct extends BaseEntity {
 
     public void setCount(int count) {
         this.count = count;
-    }
-
-    public void setCartStatus(CartStatus cartStatus) {
-        this.cartStatus = cartStatus;
     }
 
     public int getTotalPrice() {

@@ -1,4 +1,4 @@
-package purcio.purcio.order.dto;
+package purcio.purcio.order.dto.order;
 
 import lombok.Data;
 import purcio.purcio.user.domain.Address;

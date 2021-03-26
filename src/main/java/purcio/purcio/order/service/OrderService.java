@@ -1,18 +1,16 @@
 package purcio.purcio.order.service;
 
 import lombok.RequiredArgsConstructor;
-import org.aspectj.weaver.ast.Or;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import purcio.purcio.common.ResponseDTO;
 import purcio.purcio.order.domain.Delivery;
 import purcio.purcio.order.domain.Order;
 import purcio.purcio.order.domain.OrderProduct;
-import purcio.purcio.order.dto.OrderCreateReqDTO;
+import purcio.purcio.order.dto.order.OrderCreateReqDTO;
 import purcio.purcio.order.repository.OrderRepository;
 import purcio.purcio.product.domain.Product;
 import purcio.purcio.product.repository.ProductRepository;
-import purcio.purcio.user.domain.Address;
 import purcio.purcio.user.domain.User;
 import purcio.purcio.user.repository.UserRepository;
 
@@ -20,7 +18,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
