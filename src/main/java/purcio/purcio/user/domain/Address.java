@@ -19,6 +19,13 @@ public class Address {
     private String street;
     private String zipcode;
 
+    public void updateAddress(Address address) {
+        if(address.city != null) this.city = address.city;
+        if(address.district != null) this.district = address.district;
+        if(address.street != null) this.street = address.street;
+        if(address.zipcode != null) this.zipcode = address.zipcode;
+    }
+
     @Builder
     public Address(String city, String district, String street, String zipcode) {
         this.city = city;
