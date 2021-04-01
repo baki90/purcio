@@ -1,12 +1,15 @@
-package purcio.purcio.user.dto;
+package purcio.purcio.user.dto.user;
 
 import lombok.Data;
 import purcio.purcio.user.domain.Address;
 
+import javax.validation.constraints.NotBlank;
+
 @Data
-public class UserUpdateReqDTO {
+public class UserCreateReqDTO {
 
     private String name;
+    private String password;
     private String email;
     private String picture;
 
@@ -16,4 +19,5 @@ public class UserUpdateReqDTO {
     private String sex; // 성별
 
     private Address address; // 거주지
+
 }
