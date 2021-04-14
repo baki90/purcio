@@ -40,7 +40,7 @@ public class CustomProductRepositoryImpl implements CustomProductRepository {
                 .from(product)
                 .where(productCategoryEq(condition.getCategory())) // 카테고리별 조회
                 .where(productNameContains(condition.getName())) // 이름 포함별 조회
-                .where(productServerEq(condition.getShopId())) // 서버별 조회
+                .where(productServerEq(condition.getShopId())) // 뜨개샵 별 조회
                 .where(productMaxPriceLoe(condition.getMaxPrice()))// 가격 범위 조회
                 .where(productMinPriceGoe(condition.getMinPrice()))
                 .orderBy(productOrderSpecifier(condition.getProductOrderCriteria())) // 조회 기준으로 검색
