@@ -8,6 +8,8 @@ import purcio.purcio.common.exception.NotEnoughStockException;
 import purcio.purcio.common.model.BaseEntity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -24,6 +26,8 @@ public class Product extends BaseEntity {
     private int stockQuantity; // 재고
 
 
+    @OneToMany(mappedBy = "product")
+    private List<HeartProduct> heartProducts = new ArrayList<>();
 
     /** 비즈니스 메소드 */
     // 재고 수량 증가
