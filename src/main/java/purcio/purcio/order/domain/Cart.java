@@ -39,6 +39,8 @@ public class Cart extends BaseEntity {
     public void removeProduct(Long cartProductId){
         // TODO: 설렉트 쿼리가 너무 많이 나감. 성능 개선 필요.
         cartProducts.removeIf(c -> c.getId() == cartProductId);
+        //test
+        cartProducts.removeIf(c -> c.getId() == cartProductId);
         update();
     }
 
